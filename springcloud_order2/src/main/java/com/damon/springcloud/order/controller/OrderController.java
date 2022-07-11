@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
     @GetMapping(value = "/r1")
-    @PreAuthorize("hasAuthority('p2')")//拥有p1权限方可访问此url
+    @PreAuthorize("hasAuthority('p1')")//拥有p1权限方可访问此url
     public String r1(){
         //返回信息
         return "访问资源1";
@@ -24,5 +24,4 @@ public class OrderController {
         //返回信息
         return "访问资源2";
     }
-
 }

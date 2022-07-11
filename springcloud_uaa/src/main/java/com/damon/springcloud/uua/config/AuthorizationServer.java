@@ -51,7 +51,6 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients)
             throws Exception {
-        clients.withClientDetails(clientDetailsService);
         clients.inMemory()// 使用in-memory存储
                 .withClient("c1")// client_id
                 .secret(new BCryptPasswordEncoder().encode("secret"))//客户端密钥

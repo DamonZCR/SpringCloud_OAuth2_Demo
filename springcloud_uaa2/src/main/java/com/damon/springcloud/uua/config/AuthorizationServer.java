@@ -50,21 +50,21 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Autowired//对JWT生成的方式进行注入
     private JwtAccessTokenConverter accessTokenConverter;
 
+    @Autowired//注入密码编码器
+    private PasswordEncoder passwordEncoder;
+
+    //将客户端信息存储到数据库,以及从数据库中查询客户端信息；
+    @Bean
+    public ClientDetailsService clientDetailsService(DataSource dataSource) {
+        ClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);
+        ((JdbcClientDetailsService) clientDetailsService).setPasswordEncoder(passwordEncoder);
+        return clientDetailsService;
+    }
     //启动对第一个类，客户端详情服务的配置
     @Override
     public void configure(ClientDetailsServiceConfigurer clients)
             throws Exception {
         clients.withClientDetails(clientDetailsService);
-        clients.inMemory()// 使用in-memory存储
-                .withClient("c1")// client_id
-                .secret(new BCryptPasswordEncoder().encode("secret"))//客户端密钥
-                .resourceIds("res1")//资源列表
-                .authorizedGrantTypes("authorization_code", "password","client_credentials","implicit","refresh_token")// 该client允许的授权类型authorization_code,password,refresh_token,implicit,client_credentials
-                .scopes("all")// 允许的授权范围
-                .autoApprove(false)//false跳转到授权页面
-                //加上验证回调地址
-                .redirectUris("http://www.baidu.com")
-                ;
     }
 
     // 启动对第二个类，管理令牌类的构建
@@ -105,10 +105,9 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
         return service;
     }
 
-    //第二个类使用，设置授权码模式的授权码如何存取，暂时采用内存方式
-    //因为是@Bean,所以其他地方注入的时候就会使用这个授权码服务
+    //授权码保存到数据库中，原来保存到内存中。使用JDBC的方式保存
     @Bean
-    public AuthorizationCodeServices authorizationCodeServices() {
-        return new InMemoryAuthorizationCodeServices();
+    public AuthorizationCodeServices authorizationCodeServices(DataSource dataSource) {
+        return new JdbcAuthorizationCodeServices(dataSource);//设置授权码模式的授权码如何存取
     }
 }
