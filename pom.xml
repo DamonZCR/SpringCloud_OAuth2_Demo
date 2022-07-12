@@ -12,6 +12,10 @@
         <module>springcloud_order</module>
         <module>springcloud_uaa2</module>
         <module>springcloud_order2</module>
+        <module>distributed_gateway</module>
+        <module>distributed_discovery</module>
+        <module>distributed_order</module>
+        <module>distributed_uaa</module>
     </modules>
 
     <packaging>pom</packaging>

@@ -6,8 +6,6 @@ Spring-Security-OAuth2是对OAuth2的一种实现，并且跟我们之前学习�
 
    OAuth2.0的服务提供方共涵盖两个服务，即**授权服务** (Authorization Server，也叫认证服务) 和**资源服务** (Resource Server)，使用 Spring Security OAuth2 的时候你可以选择把它们在同一个应用程序中实现，也可以选择建立使用 同一个授权服务的多个资源服务。
 
- 
-
 **授权服务 (Authorization Server）**应包含对接入端以及登入用户的合法性进行验证并颁发token等功能，对令牌的请求端点由 Spring MVC 控制器进行实现，下面是配置一个认证服务必须要实现的endpoints： 
 
 - AuthorizationEndpoint 服务于认证请求。默认     URL： /oauth/authorize 。 
@@ -57,7 +55,8 @@ https://github.com/spring-projects/spring-security/tree/master/oauth2
 | :--: | :--------------: | :----------------: | :----------------: | :--: |
 |  1   | springcloud_uaa  |        内存        | springcloud_order  |  否  |
 |  2   | springcloud_uaa2 |   JWT（不存储）    | springcloud_order2 |  是  |
-|  3   |                  |                    |                    |      |
+|  3   |    分布式项目    |        JWT         |     分布式项目     |  是  |
 
 - 第一个项目，springcloud_uaa是基于内存实现的，即客户端信息（生成的token）保存到内存中，对客户端的校验不需要从数据库中查询，这个项目支持四种访问模式，只是一个入门的项目；
 - 第二个项目，springcloud_uaa2使用JWT实现token，此时授权服务器不需要存储令牌，令牌中存储着用户的所有信息，资源服务器不需要对客户端的每一个请求都要去验证令牌，使用了JWT，只需资源服务器本身验证令牌合法性即可，不需要再远程连接授权服务进行验证；
+- 第三个项目，distributed_discovery + distributed_gateway + distributed_ + distributed_ 实现分布式的微服务Spring Security OAuth2.0认证协议，协议使用distributed_discovery作为服务注册发现中心，基于eureka的配置注册中心，distributed_gateway是网关。

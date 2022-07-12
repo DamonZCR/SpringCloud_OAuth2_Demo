@@ -16,13 +16,12 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
     <dependencies>
-        <!--已经在父工程指定好版本号，所这里不需要再指定-->
-        <dependency><!--SpringCloud熔断的依赖-->
+<!--        <dependency> 注册中心依赖，此处不需要，此项目不使用注册中心
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
+        </dependency>-->
 
-        <dependency>
+        <dependency><!--SpringCloud熔断的依赖-->
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
