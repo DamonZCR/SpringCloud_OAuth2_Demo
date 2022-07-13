@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.damon.springcloud.order</groupId>
+    <groupId>com.damon.distributed.order</groupId>
     <artifactId>distributed_order</artifactId>
 
     <properties>

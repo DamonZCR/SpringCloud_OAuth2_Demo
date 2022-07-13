@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.damon.springcloud.gateway</groupId>
+    <groupId>com.damon.distributed.gateway</groupId>
     <artifactId>distributed_gateway</artifactId>
 
     <properties>
@@ -23,7 +23,7 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
-        <dependency>
+        <dependency><!--网管也需要远程调用，所以需要容灾处理的-->
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
@@ -58,7 +58,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
+        <dependency><!--网关采用Zuul-->
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
         </dependency>

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.damon.springcloud.discovery</groupId>
+    <groupId>com.damon.distributed.discovery</groupId>
     <artifactId>distributed_discovery</artifactId>
 
     <properties>

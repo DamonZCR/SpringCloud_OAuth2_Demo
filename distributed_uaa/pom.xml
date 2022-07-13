@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.damon.springcloud.uaa</groupId>
+    <groupId>com.damon.distributed.uua</groupId>
     <artifactId>distributed_uaa</artifactId>
 
     <properties>
