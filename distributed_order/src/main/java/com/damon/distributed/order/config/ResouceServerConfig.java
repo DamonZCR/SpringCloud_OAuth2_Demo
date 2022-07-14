@@ -1,7 +1,6 @@
 package com.damon.distributed.order.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,8 +8,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
-import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
 /** 1、资源服务器配置
@@ -34,13 +31,14 @@ public class ResouceServerConfig extends ResourceServerConfigurerAdapter {
                 .stateless(true);
     }
 
-    //配置资源服务的安全安全访问策略
+    //配置资源服务的安全访问策略
     @Override
     public void configure(HttpSecurity http) throws Exception {
 
         http
             .authorizeRequests()
-            .antMatchers("/**").access("#oauth2.hasScope('all')")
+                //只有拥有ROLE_ADMIN权限的客户端才可以访问
+            .antMatchers("/**").access("#oauth2.hasScope('ROLE_API')")
             .and().csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }

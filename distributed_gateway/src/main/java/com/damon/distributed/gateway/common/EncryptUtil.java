@@ -71,17 +71,14 @@ public class EncryptUtil {
         String encoded = EncryptUtil.encodeUTF8StringBase64(str);
         String decoded = EncryptUtil.decodeUTF8StringBase64(encoded);
         System.out.println(str);
-        System.out.println(encoded);
-        System.out.println(decoded);
+        System.out.println("1、编码成Base64格式：   " + encoded);
+        System.out.println("2、Base64格式转为正常：  " + decoded);
 
         String url = "== wo";
         String urlEncoded = EncryptUtil.encodeURL(url);
         String urlDecoded = EncryptUtil.decodeURL(urlEncoded);
-        
         System.out.println(url);
         System.out.println(urlEncoded);
         System.out.println(urlDecoded);
     }
-
-
 }

@@ -52,7 +52,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Autowired//注入密码编码器
     private PasswordEncoder passwordEncoder;
 
-    //将客户端信息存储到数据库,以及从数据库中查询客户端信息；
+    //实现将客户端信息存储到数据库,以及从数据库中查询客户端信息；
     @Bean
     public ClientDetailsService clientDetailsService(DataSource dataSource) {
         ClientDetailsService clientDetailsService = new JdbcClientDetailsService(dataSource);

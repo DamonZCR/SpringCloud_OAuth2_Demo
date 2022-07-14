@@ -8,7 +8,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
-/**
+/** 网关的资源
+ * 网关下是有很多资源服务的
  * @author Administrator
  * @version 1.0
  **/
@@ -16,7 +17,6 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 public class ResouceServerConfig  {
 
     public static final String RESOURCE_ID = "res1";
-
 
     //uaa资源服务配置
     @Configuration
@@ -33,11 +33,11 @@ public class ResouceServerConfig  {
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests()
-                 .antMatchers("/uaa/**").permitAll();
+            http.csrf().disable()
+                    .authorizeRequests()//访问的是uaa下的服务，直接就放行；因为它是用来授权和验证的；
+                    .antMatchers("/uaa3/**").permitAll();
         }
     }
-
 
     //order资源
     //uaa资源服务配置
@@ -56,13 +56,11 @@ public class ResouceServerConfig  {
         @Override
         public void configure(HttpSecurity http) throws Exception {
             http
-                    .authorizeRequests()
-                    .antMatchers("/order/**").access("#oauth2.hasScope('ROLE_API')");
+                    .authorizeRequests()//访问的是order下的服务，且具备ROLE_API的权限就放行；
+                    .antMatchers("/order3/**").access("#oauth2.hasScope('ROLE_API')");
         }
     }
 
-
     //配置其它的资源服务..
-
 
 }
