@@ -19,7 +19,7 @@ public class OrderController {
     public String r1(){
         // 获得用户信息，获得的信息全存储在getUsername()中，其他属性全为空，bug之一
         UserDTO userDTO = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String name = userDTO.getUsername().split(",")[0].split(":")[1];
+        String name = userDTO.getFullname();
         //返回信息
         return name + "访问资源1 - 权限资源 - 对应权限 p1";
     }
@@ -28,7 +28,7 @@ public class OrderController {
     @PreAuthorize("hasAuthority('p2')")//拥有p5权限方可访问此url
     public String r2(){
         UserDTO userDTO = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String name = userDTO.getUsername().split(",")[0].split(":")[1];
+        String name = userDTO.getFullname();
         //返回信息
         return name + "访问资源2 权限资源 对应权限 p2";
     }
@@ -38,7 +38,7 @@ public class OrderController {
     public String r3(){
         // 获得用户信息
         UserDTO userDTO = (UserDTO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String name = userDTO.getUsername().split(",")[0].split(":")[1];
+        String name = userDTO.getFullname();
         //返回信息
         return name + "访问资源3 匿名资源 对应权限 无";
     }

@@ -36,9 +36,11 @@ public class SpringDataUserDetailsService implements UserDetailsService {
         //将permissions转成数组
         String[] permissionArray = new String[permissions.size()];
         permissions.toArray(permissionArray);
-        //将userDto转成json
+        //将用户所有的信息封装在UserDetails中打包为JWT传送给网关和资源服务。将userDto转成json
         String principal = JSON.toJSONString(userDto);
         UserDetails userDetails = User.withUsername(principal).password(userDto.getPassword()).authorities(permissionArray).build();
+        //只将用户的名字封装在UserDetails中打包为JWT传送给网关和资源服务；
+        //UserDetails userDetails = User.withUsername(userDto.getUsername()).password(userDto.getPassword()).authorities(permissionArray).build();
         return userDetails;
     }
 }

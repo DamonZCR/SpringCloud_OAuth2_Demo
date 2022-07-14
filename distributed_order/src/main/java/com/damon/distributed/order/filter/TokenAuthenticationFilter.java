@@ -37,14 +37,18 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             //将token转成json对象
             JSONObject jsonObject = JSON.parseObject(json);
             //用户身份信息
-            UserDTO userDTO = new UserDTO();
+            /**这里对用户信息进行拓展后，是将整个用户信息打包为JSON放入了JWT。这三行代码是没改动前JWT只有用户名的代码
+             * UserDTO userDTO = new UserDTO();
             String principal = jsonObject.getString("principal");
-            userDTO.setUsername(principal);//只是得到用户信息
+            userDTO.setUsername(principal);//只是得到用户信息*/
+            // 将uaa服务封装的用户信息JSON解析为Java对象；
+            UserDTO userDTO = JSON.parseObject(jsonObject.getString("principal"), UserDTO.class);
+
             //用户权限
             JSONArray authoritiesArray = jsonObject.getJSONArray("authorities");
             String[] authorities = authoritiesArray.toArray(new String[authoritiesArray.size()]);
 
-            System.out.println("\n访问的用户(非客户端)的信息: " + principal + "权限列表: " + Arrays.toString(authorities) + "\n");
+            System.out.println("\n访问的用户(非客户端)的信息: " + userDTO.getFullname() + " , 权限列表: " + Arrays.toString(authorities) + "\n");
 
             //2、新建并将用户信息和权限填充到用户身份token对象authenticationToken中,这才是被Spring Security识别的token
             UsernamePasswordAuthenticationToken authenticationToken//参数依次是：身份信息、凭证、权限，权限的话需要使用它提供工具类转为特定的格式；
