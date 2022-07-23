@@ -1,11 +1,11 @@
 package com.damon.distributed.uua.config;
 
+import com.damon.distributed.uua.service.SpringDataUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -52,6 +52,9 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Autowired//注入密码编码器
     private PasswordEncoder passwordEncoder;
 
+    @Autowired//因为实现了UserDetailsService，对于密码模式需要所以在第二个类中配置；
+    private SpringDataUserDetailsService springDataUserDetailsService;
+
     //实现将客户端信息存储到数据库,以及从数据库中查询客户端信息；
     @Bean
     public ClientDetailsService clientDetailsService(DataSource dataSource) {
@@ -71,13 +74,13 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         endpoints
                 .authenticationManager(authenticationManager)//认证管理器
+                .userDetailsService(springDataUserDetailsService)//密码模式需要的用户详情，发现不配置也可以；
                 .authorizationCodeServices(authorizationCodeServices)//授权码服务
                 .tokenServices(tokenService())//令牌管理服务
                 .allowedTokenEndpointRequestMethods(HttpMethod.POST);
     }
 
     //启动对第三个类，安全约束的配置
-    //
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security){
         security

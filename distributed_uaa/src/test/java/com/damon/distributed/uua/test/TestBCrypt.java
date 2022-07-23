@@ -1,4 +1,4 @@
-package com.damon.springcloud.uua.test;
+package com.damon.distributed.uua.test;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
